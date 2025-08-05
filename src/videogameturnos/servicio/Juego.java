@@ -27,6 +27,14 @@ public class Juego {
         this.jugador1 = jugador1;
         this.jugador2 = jugador2;
     }
+    public Personaje getPersonaje1() {
+    return personaje1;
+}
+
+public Personaje getPersonaje2() {
+    return personaje2;
+}
+
 
     // Método para iniciar el juego
     public void iniciarJuego() {
