@@ -20,9 +20,9 @@ import videogameturnos.modelo.Raza;
 public class Persistencia {
 
     // Datos de conexión a la base de datos
-    private static final String URL = "jdbc:sqlserver://localhost;databaseName=VideojuegoDB;";
-    private static final String USER = "usuario";  // Cambia 'usuario' por el nombre de usuario de tu base de datos
-    private static final String PASSWORD = "contraseña";  // Cambia 'contraseña' por la contraseña de tu base de datos
+    private static final String URL = "jdbc:sqlserver://localhost;databaseName=VideojuegoCombate;encrypt=true;trustServerCertificate=true";
+    private static final String USER = "sa";  // Cambia 'usuario' por el nombre de usuario de tu base de datos
+    private static final String PASSWORD = "112306";  // Cambia 'contraseña' por la contraseña de tu base de datos
 
     // Método para obtener una conexión a la base de datos
     public static Connection obtenerConexion() {
