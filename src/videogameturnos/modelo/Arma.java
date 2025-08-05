@@ -20,9 +20,11 @@ public class Arma {
     private int danoMinimo;  // Daño mínimo que puede hacer el arma
     private int danoMaximo;  // Daño máximo que puede hacer el arma
     private String modificadores;  // Modificadores especiales (ejemplo: "+2% daño")
+    private final int id;
 
     // Constructor
-    public Arma(String nombre, String tipo, int danoMinimo, int danoMaximo, String modificadores) {
+    public Arma(String nombre, String tipo, int id, int danoMinimo, String modificadores) {
+        this.id = id;
         this.nombre = nombre;
         this.tipo = tipo;
         this.danoMinimo = danoMinimo;
@@ -70,7 +72,12 @@ public class Arma {
     public void setModificadores(String modificadores) {
         this.modificadores = modificadores;
     }
+     public int getId() {
+        return id;
+    }
 
+    
+    
     // Método para realizar un ataque con el arma
     public int atacar() {
         // Calcular el daño aleatorio entre el daño mínimo y máximo
