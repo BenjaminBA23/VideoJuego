@@ -4,6 +4,8 @@
  */
 package videogameturnos.modelo;
 
+import java.util.Random;
+
 /**
  *
  * @author pame
@@ -13,38 +15,22 @@ package videogameturnos.modelo;
  * Un arma tiene un nombre, un tipo (por ejemplo, hacha, espada, hechizo), y valores para el daño que puede causar.
  */
 public class Arma {
-    // Nombre del arma (Ej. Escopeta, Hacha, Báculo)
     private String nombre;
-    // Tipo del arma (Ej. Arma de fuego, Hechizo)
-    private String tipo;
-    // Daño mínimo que puede causar el arma
-    private int danoMinimo;
-    // Daño máximo que puede causar el arma
-    private int danoMaximo;
+    private String tipo;  // Tipo de arma: Físico, Magia, etc.
+    private int danoMinimo;  // Daño mínimo que puede hacer el arma
+    private int danoMaximo;  // Daño máximo que puede hacer el arma
+    private String modificadores;  // Modificadores especiales (ejemplo: "+2% daño")
 
-    /**
-     * Constructor para crear un arma con su nombre, tipo, y valores de daño.
-     * @param nombre El nombre del arma.
-     * @param tipo El tipo del arma (Ej. Magia, Arma de fuego).
-     * @param danoMinimo El daño mínimo que el arma puede causar.
-     * @param danoMaximo El daño máximo que el arma puede causar.
-     */
-    public Arma(String nombre, String tipo, int danoMinimo, int danoMaximo) {
+    // Constructor
+    public Arma(String nombre, String tipo, int danoMinimo, int danoMaximo, String modificadores) {
         this.nombre = nombre;
         this.tipo = tipo;
         this.danoMinimo = danoMinimo;
         this.danoMaximo = danoMaximo;
+        this.modificadores = modificadores;
     }
 
-    /**
-     * Método para realizar un ataque con el arma.
-     * El daño es aleatorio entre el daño mínimo y máximo.
-     * @return El daño calculado aleatoriamente.
-     */
-    public int atacar() {
-        return (int) (Math.random() * (danoMaximo - danoMinimo + 1)) + danoMinimo;
-    }
-
+    // Getters y Setters
     public String getNombre() {
         return nombre;
     }
@@ -77,5 +63,34 @@ public class Arma {
         this.danoMaximo = danoMaximo;
     }
 
-    
+    public String getModificadores() {
+        return modificadores;
+    }
+
+    public void setModificadores(String modificadores) {
+        this.modificadores = modificadores;
+    }
+
+    // Método para realizar un ataque con el arma
+    public int atacar() {
+        // Calcular el daño aleatorio entre el daño mínimo y máximo
+        Random random = new Random();
+        int dano = random.nextInt(danoMaximo - danoMinimo + 1) + danoMinimo;
+
+        // Aplicar modificadores (Ejemplo: +2% de daño adicional)
+        if (modificadores != null && modificadores.contains("%")) {
+            int porcentaje = Integer.parseInt(modificadores.replace("%", ""));
+            dano += (dano * porcentaje) / 100;  // Aumentar el daño en base al modificador
+        }
+
+        return dano;
+    }
+
+    // Método para mostrar la información del arma
+    public void mostrarInfo() {
+        System.out.println("Nombre: " + nombre);
+        System.out.println("Tipo: " + tipo);
+        System.out.println("Daño: " + danoMinimo + " - " + danoMaximo);
+        System.out.println("Modificadores: " + modificadores);
+    }
 }

@@ -8,7 +8,7 @@ package videogameturnos.Main;
  *
  * @author Ben
  */
-public class VideoGameTurnos {
+public class Main {
 
     /**
      * @param args the command line arguments

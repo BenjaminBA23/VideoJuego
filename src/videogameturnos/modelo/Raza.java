@@ -9,23 +9,16 @@ package videogameturnos.modelo;
  * @author pame
  */
 public class Raza {
-    // Nombre de la raza (Ej. Humano, Elfo, Orco, Bestia)
-    private String nombre;
-    // Descripción de las características y habilidades de la raza
-    private String descripcion;
+    private String nombre;       // Nombre de la raza (Ej: Humano, Elfo, Orco, Bestia)
+    private String descripcion;  // Descripción de la raza (por ejemplo, características, habilidades)
 
-    /**
-     * Constructor para crear una raza con su nombre y descripción.
-     * @param nombre El nombre de la raza.
-     * @param descripcion Una breve descripción de la raza.
-     */
+    // Constructor
     public Raza(String nombre, String descripcion) {
         this.nombre = nombre;
         this.descripcion = descripcion;
     }
 
-    // Métodos Getters y Setters
-
+    // Getters y Setters
     public String getNombre() {
         return nombre;
     }
@@ -41,5 +34,10 @@ public class Raza {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    
+
+    // Método para mostrar la información de la raza
+    public void mostrarInfo() {
+        System.out.println("Raza: " + this.nombre);
+        System.out.println("Descripción: " + this.descripcion);
+    }
 }
