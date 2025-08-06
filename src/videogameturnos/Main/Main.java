@@ -17,7 +17,7 @@ import videogameturnos.servicio.Persistencia;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-
+        System.out.println("         Epicas Batallas      ");
         System.out.println(" VIDEOJUEGO DE BATALLA POR TURNOS ");
 
         // Pedir nombres de los jugadores

@@ -4,6 +4,7 @@
  */
 package videogameturnos.servicio;
 
+import java.util.Scanner;
 import videogameturnos.modelo.Arma;
 import videogameturnos.modelo.Jugador;
 import videogameturnos.modelo.Personaje;
@@ -68,14 +69,83 @@ public class Juego {
      * Este método debería integrar la lógica para que el jugador elija su personaje.
      */
     private Personaje seleccionarPersonaje(Jugador jugador) {
-        // Lógica de selección de personaje
-        // Asegúrate de que el constructor de la clase Raza esté correctamente implementado
-        Raza raza = new Raza("Humano", "Un ser humano comun");  // Verifica que el constructor de Raza esté bien definido
-        Arma arma = new Arma("Escopeta", "Fisico", 1, 5, 10, "+2% ataque");  // Verifica que el constructor de Arma esté bien definido
+    Scanner scanner = new Scanner(System.in);
 
-        // Retorna un nuevo personaje con los parámetros definidos
-        return new Personaje("Jhon", 100, 50, 50, raza, arma);
+    System.out.println("\n-----------------------------------");
+    System.out.println("Elije una raza para " + jugador.getNombre() + ":");
+    System.out.println("1. Humano");
+    System.out.println("2. Elfo");
+    System.out.println("3. Orco");
+    System.out.println("4. Bestia");
+    System.out.print("Opcion: ");
+    int opcion = scanner.nextInt();
+    scanner.nextLine(); // Limpiar buffer
+
+    String nombrePersonaje;
+    System.out.print("Por favor escribe como quieres que se llame tu personaje: ");
+    nombrePersonaje = scanner.nextLine();
+
+    Raza raza = null;
+    Arma arma = null;
+    int vida = 100, fuerza = 50, energia = 50; // Puedes ajustar los valores base según la raza
+
+    switch (opcion) {
+        case 1: // Humano
+            raza = new Raza("Humano", "Solo puede usar armas de fuego.");
+            System.out.println("Elige un arma: ");
+            System.out.println("1. Escopeta");
+            System.out.println("2. Rifle Francotirador");
+            int armaHumano = scanner.nextInt();
+            arma = (armaHumano == 1)
+                ? new Arma("Escopeta", "Físico", 1, 5, 10, "+2% daño")
+                : new Arma("Rifle Francotirador", "Físico", 2, 5, 10, ""); // Ajusta valores
+            break;
+        case 2: // Elfo
+            raza = new Raza("Elfo", "Solo puede usar magia (báculo).");
+            System.out.println("Elige tipo de magia:");
+            System.out.println("1. Fuego");
+            System.out.println("2. Tierra");
+            System.out.println("3. Aire");
+            System.out.println("4. Agua");
+            int armaElfo = scanner.nextInt();
+            switch (armaElfo) {
+                case 1: arma = new Arma("Magia de Fuego", "Magia", 3, 5, 10, "+10% daño"); break;
+                case 2: arma = new Arma("Magia de Tierra", "Magia", 4, 5, 10, "+2% daño"); break;
+                case 3: arma = new Arma("Magia de Aire", "Magia", 5, 5, 12, ""); break;
+                case 4: 
+                    arma = new Arma("Magia de Agua", "Magia", 6, 5, 10, ""); 
+                    vida = 115; // Elfo agua tiene más vida inicial
+                    break;
+            }
+            break;
+        case 3: // Orco
+            raza = new Raza("Orco", "Solo puede usar hacha o martillo.");
+            System.out.println("Elige un arma: ");
+            System.out.println("1. Hacha");
+            System.out.println("2. Martillo");
+            int armaOrco = scanner.nextInt();
+            arma = (armaOrco == 1)
+                ? new Arma("Hacha", "Físico", 7, 5, 10, "Sangrado")
+                : new Arma("Martillo", "Físico", 8, 5, 10, "");
+            break;
+        case 4: // Bestia
+            raza = new Raza("Bestia", "Puede elegir entre puños o espada.");
+            System.out.println("Elige un arma: ");
+            System.out.println("1. Puños");
+            System.out.println("2. Espada");
+            int armaBestia = scanner.nextInt();
+            arma = (armaBestia == 1)
+                ? new Arma("Puños", "Físico", 9, 25, 25, "-10 vida atacante")
+                : new Arma("Espada", "Físico", 10, 1, 10, "");
+            break;
+        default:
+            System.out.println("Opcion invalida, se asigna Humano con Escopeta.");
+            raza = new Raza("Humano", "Default");
+            arma = new Arma("Escopeta", "Físico", 1, 5, 10, "+2% destruccion");
     }
+
+    return new Personaje(nombrePersonaje, vida, fuerza, energia, raza, arma);
+}
 
     /**
      * Método para gestionar el combate entre los dos personajes.
