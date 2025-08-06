@@ -152,32 +152,48 @@ public class Juego {
      * Los turnos se alternan entre los jugadores hasta que uno de los personajes pierde toda su vida.
      */
     public void combate() {
-        boolean turnoJugador1 = true;
+    boolean turnoJugador1 = true;
 
-        // El combate continúa mientras ambos personajes estén vivos
-        while (personaje1.estaVivo() && personaje2.estaVivo()) {
-            if (turnoJugador1) {
-                System.out.println("Turno de " + personaje1.getNombre());
-                realizarAccion(personaje1, personaje2);
-            } else {
-                System.out.println("Turno de " + personaje2.getNombre());
-                realizarAccion(personaje2, personaje1);
-            }
-
-            turnoJugador1 = !turnoJugador1;  // Alternar entre jugadores
-        }
-
-        // Al final del combate, determinar el ganador
-        if (personaje1.estaVivo()) {
-            System.out.println(jugador1.getNombre() + " gana la partida!");
-            jugador1.actualizarEstadisticas(true);
-            jugador2.actualizarEstadisticas(false);
+    // El combate continúa mientras ambos personajes estén vivos
+    while (personaje1.estaVivo() && personaje2.estaVivo()) {
+        if (turnoJugador1) {
+            System.out.println("Turno de " + personaje1.getNombre());
+            realizarAccion(personaje1, personaje2);
         } else {
-            System.out.println(jugador2.getNombre() + " gana la partida!");
-            jugador1.actualizarEstadisticas(false);
-            jugador2.actualizarEstadisticas(true);
+            System.out.println("Turno de " + personaje2.getNombre());
+            realizarAccion(personaje2, personaje1);
         }
+        turnoJugador1 = !turnoJugador1;  // Alternar entre jugadores
     }
+
+    // Al final del combate, determinar el ganador
+    if (personaje1.estaVivo()) {
+        System.out.println(jugador1.getNombre() + " gana la partida!");
+        jugador1.setPartidasGanadas(jugador1.getPartidasGanadas() + 1); // Incrementa victorias
+        jugador2.setPartidasPerdidas(jugador2.getPartidasPerdidas() + 1); // Incrementa derrotas
+    } else {
+        System.out.println(jugador2.getNombre() + " gana la partida!");
+        jugador1.setPartidasPerdidas(jugador1.getPartidasPerdidas() + 1); // Incrementa derrotas
+        jugador2.setPartidasGanadas(jugador2.getPartidasGanadas() + 1); // Incrementa victorias
+    }
+    
+    // Llamada para insertar o actualizar las estadísticas de ambos jugadores
+    if (!Persistencia.jugadorExiste(jugador1)) {
+        Persistencia.insertarJugador(jugador1);  // Inserta el jugador si no existe
+    } else {
+        Persistencia.actualizarEstadisticas(jugador1);  // Actualiza si ya existe
+    }
+
+    if (!Persistencia.jugadorExiste(jugador2)) {
+        Persistencia.insertarJugador(jugador2);  // Inserta el jugador si no existe
+    } else {
+        Persistencia.actualizarEstadisticas(jugador2);  // Actualiza si ya existe
+    }
+
+    // Llamada para actualizar las estadísticas en la base de datos
+    Persistencia.actualizarEstadisticas(jugador1); // Actualiza las estadísticas del jugador 1
+    Persistencia.actualizarEstadisticas(jugador2); // Actualiza las estadísticas del jugador 2
+}
 
     /**
      * Realiza la acción del combate: ataque o sanación.
@@ -193,5 +209,15 @@ public class Juego {
     public void mostrarEstadisticas() {
         jugador1.mostrarEstadisticas();
         jugador2.mostrarEstadisticas();
+    }
+    
+    public void actualizarEstadisticas(Jugador ganador, Jugador perdedor) {
+    // Actualizamos el número de victorias y derrotas
+    ganador.setPartidasGanadas(ganador.getPartidasGanadas() + 1);
+    perdedor.setPartidasPerdidas(perdedor.getPartidasPerdidas() + 1);
+
+    // Ahora se guarda en la base de datos
+    Persistencia.actualizarEstadisticas(ganador);
+    Persistencia.actualizarEstadisticas(perdedor);
     }
 }

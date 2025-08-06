@@ -10,6 +10,7 @@ package videogameturnos.servicio;
  */
 
 import java.sql.*;
+import videogameturnos.modelo.Jugador;
 import videogameturnos.modelo.Personaje;
 
 /**
@@ -31,6 +32,42 @@ public class Persistencia {
             e.printStackTrace();
             return null;
         }
+    }
+    
+    // Método para insertar un nuevo jugador
+    public static void insertarJugador(Jugador jugador) {
+        String sql = "INSERT INTO jugador (nombre, partidas_ganadas, partidas_perdidas) VALUES (?, ?, ?)";
+        try (Connection conexion = obtenerConexion();
+             PreparedStatement stmt = conexion.prepareStatement(sql)) {
+
+            stmt.setString(1, jugador.getNombre().trim()); // Insertar el nombre tal cual
+            stmt.setInt(2, jugador.getPartidasGanadas());
+            stmt.setInt(3, jugador.getPartidasPerdidas());
+
+            stmt.executeUpdate();
+            System.out.println("Jugador insertado: " + jugador.getNombre());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    //para verificar si un jugador ya exite en la base de datos
+    public static boolean jugadorExiste(Jugador jugador) {
+        String sql = "SELECT COUNT(*) FROM jugador WHERE nombre = ?";
+        try (Connection conexion = obtenerConexion();
+             PreparedStatement stmt = conexion.prepareStatement(sql)) {
+
+            // Establece el nombre del jugador a buscar
+            stmt.setString(1, jugador.getNombre().trim()); // Se asegura de eliminar espacios extra
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next() && rs.getInt(1) > 0) {
+                return true; // El jugador existe
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false; // El jugador no existe
     }
 
     /**
@@ -55,4 +92,30 @@ public class Persistencia {
             e.printStackTrace();
         }
     }
+    
+    //metodo para que actualice las estadísticas de un jugador
+  public static void actualizarEstadisticas(Jugador jugador) {
+    String sql = "UPDATE jugador SET partidas_ganadas = ?, partidas_perdidas = ? WHERE nombre = ?";
+
+    try (Connection conexion = obtenerConexion();  // Conexión a la base de datos
+         PreparedStatement stmt = conexion.prepareStatement(sql)) {
+
+        // Establece los valores de las estadísticas
+        stmt.setInt(1, jugador.getPartidasGanadas());
+        stmt.setInt(2, jugador.getPartidasPerdidas());
+        stmt.setString(3, jugador.getNombre());
+
+        // Ejecuta la actualización
+        int filasAfectadas = stmt.executeUpdate();
+        
+        // Verifica si se actualizó alguna fila
+        if (filasAfectadas > 0) {
+            System.out.println("Estadisticas actualizadas para: " + jugador.getNombre());
+        } else {
+            System.out.println("No se encontro al jugador para actualizar.");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace(); // Si hay un error, imprime el stack trace
+    }
+}
 }
