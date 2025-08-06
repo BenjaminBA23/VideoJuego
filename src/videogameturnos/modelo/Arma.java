@@ -24,13 +24,14 @@ public class Arma {
 
     // Constructor
     public Arma(String nombre, String tipo, int id, int danoMinimo, String modificadores) {
-        this.id = id;
-        this.nombre = nombre;
-        this.tipo = tipo;
-        this.danoMinimo = danoMinimo;
-        this.danoMaximo = danoMaximo;
-        this.modificadores = modificadores;
-    }
+    this.id = id;
+    this.nombre = nombre;
+    this.tipo = tipo;
+    this.danoMinimo = danoMinimo;
+    this.danoMaximo = danoMaximo; // <== ESTA LÍNEA FALTABA
+    this.modificadores = modificadores;
+}
+
 
     // Getters y Setters
     public String getNombre() {
@@ -80,18 +81,29 @@ public class Arma {
     
     // Método para realizar un ataque con el arma
     public int atacar() {
-        // Calcular el daño aleatorio entre el daño mínimo y máximo
-        Random random = new Random();
-        int dano = random.nextInt(danoMaximo - danoMinimo + 1) + danoMinimo;
+    Random random = new Random();
 
-        // Aplicar modificadores (Ejemplo: +2% de daño adicional)
-        if (modificadores != null && modificadores.contains("%")) {
-            int porcentaje = Integer.parseInt(modificadores.replace("%", ""));
-            dano += (dano * porcentaje) / 100;  // Aumentar el daño en base al modificador
-        }
-
-        return dano;
+    int rango = danoMaximo - danoMinimo + 1;
+    if (rango <= 0) {
+        System.out.println("Error: El rango de daño es inválido para el arma " + nombre);
+        return 0;
     }
+
+    int dano = random.nextInt(rango) + danoMinimo;
+
+    // Aplicar modificadores (Ejemplo: +2% de daño adicional)
+    if (modificadores != null && modificadores.contains("%")) {
+        try {
+            int porcentaje = Integer.parseInt(modificadores.replaceAll("[^\\d]", ""));
+            dano += (dano * porcentaje) / 100;
+        } catch (NumberFormatException e) {
+            System.out.println("Error al interpretar el modificador: " + modificadores);
+        }
+    }
+
+    return dano;
+}
+
 
     // Método para mostrar la información del arma
     public void mostrarInfo() {
