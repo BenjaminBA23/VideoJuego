@@ -16,22 +16,21 @@ import java.util.Random;
  */
 public class Arma {
     private String nombre;
-    private String tipo;  // Tipo de arma: Físico, Magia, etc.
-    private int danoMinimo;  // Daño mínimo que puede hacer el arma
-    private int danoMaximo;  // Daño máximo que puede hacer el arma
-    private String modificadores;  // Modificadores especiales (ejemplo: "+2% daño")
+    private String tipo;
+    private int danoMinimo;
+    private int danoMaximo;
+    private String modificadores;
     private final int id;
 
-    // Constructor
-    public Arma(String nombre, String tipo, int id, int danoMinimo, String modificadores) {
-    this.id = id;
-    this.nombre = nombre;
-    this.tipo = tipo;
-    this.danoMinimo = danoMinimo;
-    this.danoMaximo = danoMaximo; // <== ESTA LÍNEA FALTABA
-    this.modificadores = modificadores;
-}
-
+    // Constructor actualizado
+    public Arma(String nombre, String tipo, int id, int danoMinimo, int danoMaximo, String modificadores) {
+        this.id = id;
+        this.nombre = nombre;
+        this.tipo = tipo;
+        this.danoMinimo = danoMinimo;
+        this.danoMaximo = danoMaximo;
+        this.modificadores = modificadores;
+    }
 
     // Getters y Setters
     public String getNombre() {
@@ -73,39 +72,43 @@ public class Arma {
     public void setModificadores(String modificadores) {
         this.modificadores = modificadores;
     }
-     public int getId() {
+
+    public int getId() {
         return id;
     }
 
-    
-    
-    // Método para realizar un ataque con el arma
+    /**
+     * Método para realizar un ataque con el arma.
+     * Calcula un daño aleatorio dentro del rango de daño de este arma.
+     * Si el arma tiene modificadores, aplica un porcentaje adicional de daño.
+     */
     public int atacar() {
-    Random random = new Random();
-
-    int rango = danoMaximo - danoMinimo + 1;
-    if (rango <= 0) {
-        System.out.println("Error: El rango de daño es inválido para el arma " + nombre);
-        return 0;
-    }
-
-    int dano = random.nextInt(rango) + danoMinimo;
-
-    // Aplicar modificadores (Ejemplo: +2% de daño adicional)
-    if (modificadores != null && modificadores.contains("%")) {
-        try {
-            int porcentaje = Integer.parseInt(modificadores.replaceAll("[^\\d]", ""));
-            dano += (dano * porcentaje) / 100;
-        } catch (NumberFormatException e) {
-            System.out.println("Error al interpretar el modificador: " + modificadores);
+        Random random = new Random();
+        int rango = danoMaximo - danoMinimo + 1;
+        if (rango <= 0) {
+            System.out.println("Error: El rango de daño es inválido para el arma " + nombre);
+            return 0;  // Si el rango es inválido, no realiza el ataque
         }
+
+        // Calcula el daño aleatorio dentro del rango de daño
+        int dano = random.nextInt(rango) + danoMinimo;
+
+        // Aplicar modificadores (Ejemplo: +2% de daño adicional)
+        if (modificadores != null && modificadores.contains("%")) {
+            try {
+                int porcentaje = Integer.parseInt(modificadores.replaceAll("[^\\d]", ""));
+                dano += (dano * porcentaje) / 100;  // Aumenta el daño con el modificador
+            } catch (NumberFormatException e) {
+                System.out.println("Error al interpretar el modificador: " + modificadores);
+            }
+        }
+
+        return dano;
     }
 
-    return dano;
-}
-
-
-    // Método para mostrar la información del arma
+    /**
+     * Muestra la información del arma.
+     */
     public void mostrarInfo() {
         System.out.println("Nombre: " + nombre);
         System.out.println("Tipo: " + tipo);

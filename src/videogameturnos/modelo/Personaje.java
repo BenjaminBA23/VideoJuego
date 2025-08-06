@@ -80,22 +80,24 @@ public class Personaje {
     }
 
     // Método para recibir daño
-    public void recibirDanio(int danio) {
+ public void recibirDanio(int danio) {
         this.vida -= danio;
     }
 
-    // Método para realizar un ataque
+    /**
+     * Método para realizar un ataque a otro personaje.
+     */
     public void atacar(Personaje defensor) {
-        // Calcular el daño con el arma
-        int dano = this.arma.atacar();  // Asumiendo que Arma tiene un método atacar que devuelve el daño
+        int dano = this.arma.atacar();  // Usamos el método atacar del arma
         defensor.recibirDanio(dano);
         System.out.println(this.nombre + " ataca a " + defensor.getNombre() + " y le hace " + dano + " de daño.");
-        System.out.println(defensor.getNombre() + " recibe " + dano + " de daño. Vida restante: " + defensor.getVida());
     }
 
-    // Método para sanar al personaje
+    /**
+     * Método para sanar al personaje.
+     */
     public void sanar() {
-        if (this.energia >= 10) { // Supongamos que necesita 10 de energía para sanar
+        if (this.energia >= 10) {
             int sanacion = (int) (this.vida * 0.25);  // Sanación del 25% de la vida
             this.vida += sanacion;
             this.energia -= 10;  // Gasta 10 de energía por sanar
@@ -104,24 +106,10 @@ public class Personaje {
             System.out.println(this.nombre + " no tiene suficiente energía para sanar.");
         }
     }
-
-    // Método para avanzar o retroceder en el combate (ejemplo de lógica adicional)
-    public void moverse(String direccion) {
-        if (direccion.equals("adelante")) {
-            System.out.println(this.nombre + " avanza hacia el oponente.");
-        } else if (direccion.equals("atras")) {
-            System.out.println(this.nombre + " retrocede.");
-        } else {
-            System.out.println("Dirección no válida.");
-        }
-    }
-
-    // Método para verificar si el personaje está vivo
-    public boolean estaVivo() {
-        return this.vida > 0;
-    }
-
-    // Método para imprimir información básica del personaje
+    
+    /**
+     * Método para mostrar la información básica del personaje.
+     */
     public void mostrarInfo() {
         System.out.println("Nombre: " + this.nombre);
         System.out.println("Raza: " + this.raza.getNombre());
@@ -129,5 +117,13 @@ public class Personaje {
         System.out.println("Fuerza: " + this.fuerza);
         System.out.println("Energía: " + this.energia);
         System.out.println("Arma: " + this.arma.getNombre());
+    }
+
+    /**
+     * Verifica si el personaje está vivo.
+     * @return true si el personaje está vivo (vida > 0).
+     */
+    public boolean estaVivo() {
+        return this.vida > 0;
     }
 }

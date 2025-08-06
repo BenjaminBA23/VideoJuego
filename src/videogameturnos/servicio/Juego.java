@@ -27,22 +27,24 @@ public class Juego {
         this.jugador1 = jugador1;
         this.jugador2 = jugador2;
     }
+
     public Personaje getPersonaje1() {
-    return personaje1;
-}
+        return personaje1;
+    }
 
-public Personaje getPersonaje2() {
-    return personaje2;
-}
+    public Personaje getPersonaje2() {
+        return personaje2;
+    }
 
-
-    // Método para iniciar el juego
+    /**
+     * Método para iniciar el juego.
+     * Este método selecciona los personajes, muestra sus detalles e inicia el combate.
+     */
     public void iniciarJuego() {
-        // Se asume que se crean personajes a partir de la selección del jugador y de la base de datos
         personaje1 = seleccionarPersonaje(jugador1);
         personaje2 = seleccionarPersonaje(jugador2);
-        
-        // Mostrar información de los personajes
+
+        // Mostrar la información de los personajes seleccionados
         personaje1.mostrarInfo();
         personaje2.mostrarInfo();
 
@@ -50,25 +52,28 @@ public Personaje getPersonaje2() {
         combate();
     }
 
-    // Método para seleccionar un personaje
+    /**
+     * Método para seleccionar un personaje para un jugador.
+     * Este método debería integrar la lógica para que el jugador elija su personaje.
+     */
     private Personaje seleccionarPersonaje(Jugador jugador) {
-        // Aquí se puede implementar la lógica de selección de personaje por parte del jugador
-        // Se puede también recuperar un personaje previamente creado de la base de datos
-        System.out.println("Seleccionando personaje para: " + jugador.getNombre());
-        
-        // Ejemplo de creación de personajes (deberías integrar la selección del jugador)
-        Raza raza = new Raza("Humano", "Un ser humano común");
-        Arma arma = new Arma("Escopeta", "Físico", 1, 5, "+2% daño");
-        Personaje personaje = new Personaje("John", 100, 50, 50, raza, arma);
-        
-        return personaje;
+        // Lógica de selección de personaje
+        // Asegúrate de que el constructor de la clase Raza esté correctamente implementado
+        Raza raza = new Raza("Humano", "Un ser humano común");  // Verifica que el constructor de Raza esté bien definido
+        Arma arma = new Arma("Escopeta", "Físico", 1, 5, 10, "+2% daño");  // Verifica que el constructor de Arma esté bien definido
+
+        // Retorna un nuevo personaje con los parámetros definidos
+        return new Personaje("John", 100, 50, 50, raza, arma);
     }
 
-    // Método para gestionar el combate entre los dos personajes
+    /**
+     * Método para gestionar el combate entre los dos personajes.
+     * Los turnos se alternan entre los jugadores hasta que uno de los personajes pierde toda su vida.
+     */
     public void combate() {
         boolean turnoJugador1 = true;
 
-        // El combate continua mientras ambos personajes estén vivos
+        // El combate continúa mientras ambos personajes estén vivos
         while (personaje1.estaVivo() && personaje2.estaVivo()) {
             if (turnoJugador1) {
                 System.out.println("Turno de " + personaje1.getNombre());
@@ -77,11 +82,11 @@ public Personaje getPersonaje2() {
                 System.out.println("Turno de " + personaje2.getNombre());
                 realizarAccion(personaje2, personaje1);
             }
-            
-            turnoJugador1 = !turnoJugador1;  // Alternar turno
+
+            turnoJugador1 = !turnoJugador1;  // Alternar entre jugadores
         }
 
-        // Determinar el ganador
+        // Al final del combate, determinar el ganador
         if (personaje1.estaVivo()) {
             System.out.println(jugador1.getNombre() + " gana la partida!");
             jugador1.actualizarEstadisticas(true);
@@ -93,21 +98,19 @@ public Personaje getPersonaje2() {
         }
     }
 
-    // Método para realizar una acción durante el combate
+    /**
+     * Realiza la acción del combate: ataque o sanación.
+     */
     private void realizarAccion(Personaje atacante, Personaje defensor) {
-        // El atacante elige qué acción realizar: atacar, sanar, moverse, etc.
-        System.out.println(atacante.getNombre() + " decide atacar a " + defensor.getNombre());
+        System.out.println(atacante.getNombre() + " ataca a " + defensor.getNombre());
         atacante.atacar(defensor);
-
-        // Aquí también se podrían agregar opciones como sanar o moverse
-        // Por ejemplo: atacante.sanar();
     }
 
-    // Método para mostrar las estadísticas de ambos jugadores
+    /**
+     * Muestra las estadísticas de ambos jugadores al final de la partida.
+     */
     public void mostrarEstadisticas() {
-        System.out.println("Estadísticas de " + jugador1.getNombre() + ":");
-        System.out.println("Partidas ganadas: " + jugador1.getPartidasGanadas() + " | Partidas perdidas: " + jugador1.getPartidasPerdidas());
-        System.out.println("Estadísticas de " + jugador2.getNombre() + ":");
-        System.out.println("Partidas ganadas: " + jugador2.getPartidasGanadas() + " | Partidas perdidas: " + jugador2.getPartidasPerdidas());
+        jugador1.mostrarEstadisticas();
+        jugador2.mostrarEstadisticas();
     }
 }

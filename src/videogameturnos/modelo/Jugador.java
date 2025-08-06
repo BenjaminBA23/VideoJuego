@@ -12,7 +12,6 @@ package videogameturnos.modelo;
  * Clase que representa a un jugador en el juego.
  * Un jugador tiene un nombre y un historial de partidas ganadas y perdidas.
  */
-
 public class Jugador {
     private String nombre;
     private int partidasGanadas;
@@ -50,7 +49,10 @@ public class Jugador {
         this.partidasPerdidas = partidasPerdidas;
     }
 
-    // Método para actualizar las estadísticas del jugador
+    /**
+     * Actualiza las estadísticas del jugador después de una partida.
+     * Si ganó, aumenta las partidas ganadas. Si perdió, aumenta las partidas perdidas.
+     */
     public void actualizarEstadisticas(boolean gano) {
         if (gano) {
             this.partidasGanadas++;
@@ -59,7 +61,9 @@ public class Jugador {
         }
     }
 
-    // Método para mostrar las estadísticas del jugador
+    /**
+     * Muestra las estadísticas del jugador.
+     */
     public void mostrarEstadisticas() {
         System.out.println("Jugador: " + this.nombre);
         System.out.println("Partidas ganadas: " + this.partidasGanadas);
