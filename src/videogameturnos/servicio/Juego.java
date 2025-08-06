@@ -59,11 +59,11 @@ public class Juego {
     private Personaje seleccionarPersonaje(Jugador jugador) {
         // Lógica de selección de personaje
         // Asegúrate de que el constructor de la clase Raza esté correctamente implementado
-        Raza raza = new Raza("Humano", "Un ser humano común");  // Verifica que el constructor de Raza esté bien definido
-        Arma arma = new Arma("Escopeta", "Físico", 1, 5, 10, "+2% daño");  // Verifica que el constructor de Arma esté bien definido
+        Raza raza = new Raza("Humano", "Un ser humano comun");  // Verifica que el constructor de Raza esté bien definido
+        Arma arma = new Arma("Escopeta", "Fisico", 1, 5, 10, "+2% ataque");  // Verifica que el constructor de Arma esté bien definido
 
         // Retorna un nuevo personaje con los parámetros definidos
-        return new Personaje("John", 100, 50, 50, raza, arma);
+        return new Personaje("Jhon", 100, 50, 50, raza, arma);
     }
 
     /**

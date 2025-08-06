@@ -86,7 +86,7 @@ public class Arma {
         Random random = new Random();
         int rango = danoMaximo - danoMinimo + 1;
         if (rango <= 0) {
-            System.out.println("Error: El rango de daño es inválido para el arma " + nombre);
+            System.out.println("Error: El rango de daño es invalido para el arma " + nombre);
             return 0;  // Si el rango es inválido, no realiza el ataque
         }
 

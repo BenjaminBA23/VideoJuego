@@ -90,7 +90,7 @@ public class Personaje {
     public void atacar(Personaje defensor) {
         int dano = this.arma.atacar();  // Usamos el método atacar del arma
         defensor.recibirDanio(dano);
-        System.out.println(this.nombre + " ataca a " + defensor.getNombre() + " y le hace " + dano + " de daño.");
+        System.out.println(this.nombre + " ataca a " + defensor.getNombre() + " y le hace " + dano + " de destruccion.");
     }
 
     /**
@@ -103,7 +103,7 @@ public class Personaje {
             this.energia -= 10;  // Gasta 10 de energía por sanar
             System.out.println(this.nombre + " se ha sanado por " + sanacion + " puntos. Vida actual: " + this.vida);
         } else {
-            System.out.println(this.nombre + " no tiene suficiente energía para sanar.");
+            System.out.println(this.nombre + " no tiene suficiente energia para sanar.");
         }
     }
     
@@ -115,7 +115,7 @@ public class Personaje {
         System.out.println("Raza: " + this.raza.getNombre());
         System.out.println("Vida: " + this.vida);
         System.out.println("Fuerza: " + this.fuerza);
-        System.out.println("Energía: " + this.energia);
+        System.out.println("Energia: " + this.energia);
         System.out.println("Arma: " + this.arma.getNombre());
     }
 

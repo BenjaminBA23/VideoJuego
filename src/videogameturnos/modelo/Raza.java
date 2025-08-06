@@ -38,6 +38,6 @@ public class Raza {
     // Método para mostrar la información de la raza
     public void mostrarInfo() {
         System.out.println("Raza: " + this.nombre);
-        System.out.println("Descripción: " + this.descripcion);
+        System.out.println("Descripcion: " + this.descripcion);
     }
 }

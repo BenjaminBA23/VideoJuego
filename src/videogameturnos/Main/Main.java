@@ -45,7 +45,7 @@ public class Main {
             Persistencia.guardarPersonaje(p2);
         }
 
-        System.out.println("¡Gracias por jugar!");
+        System.out.println("Gracias mi estimad@ por jugar!");
         scanner.close();
     }
 }
