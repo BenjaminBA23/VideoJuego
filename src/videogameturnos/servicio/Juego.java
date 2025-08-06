@@ -41,15 +41,26 @@ public class Juego {
      * Este método selecciona los personajes, muestra sus detalles e inicia el combate.
      */
     public void iniciarJuego() {
-        personaje1 = seleccionarPersonaje(jugador1);
-        personaje2 = seleccionarPersonaje(jugador2);
+     // Salto de línea para separar visualmente
+    System.out.println("\n\nSeleccionando un personaje para: " + jugador1.getNombre());
+    System.out.println("Seleccionando un personaje para: " + jugador2.getNombre());
+    System.out.println("\n\n");
 
-        // Mostrar la información de los personajes seleccionados
-        personaje1.mostrarInfo();
-        personaje2.mostrarInfo();
+    // Selección de personajes
+    personaje1 = seleccionarPersonaje(jugador1);
+    personaje2 = seleccionarPersonaje(jugador2);
 
-        // Iniciar el combate
-        combate();
+    // Mostrar información de los personajes elegidos con etiquetas y saltos de línea
+    System.out.println("Personaje para: " + jugador1.getNombre());
+    personaje1.mostrarInfo();
+    System.out.println("\n");
+
+    System.out.println("Personaje para: " + jugador2.getNombre());
+    personaje2.mostrarInfo();
+    System.out.println("\n");
+
+    // Iniciar el combate
+    combate();
     }
 
     /**

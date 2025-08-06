@@ -111,12 +111,13 @@ public class Personaje {
      * Método para mostrar la información básica del personaje.
      */
     public void mostrarInfo() {
-        System.out.println("Nombre: " + this.nombre);
+         System.out.println("Nombre: " + this.nombre);
         System.out.println("Raza: " + this.raza.getNombre());
         System.out.println("Vida: " + this.vida);
         System.out.println("Fuerza: " + this.fuerza);
         System.out.println("Energia: " + this.energia);
         System.out.println("Arma: " + this.arma.getNombre());
+        System.out.println(""); // Salto de línea extra al final
     }
 
     /**
